@@ -3,9 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>Todo List</title>
+    <link rel="stylesheet" href="../src/style.css">
 </head>
 <body>
-    
+    <header>
+      <h1>To-Do List</h1>
+    </header>
+    <main>
+      <aside>
+        <h2>Projects</h2>
+        <ul id="project-list">
+          <li class="active">Default</li>
+          <li>Project 1</li>
+          <li>Project 2</li>
+          <li>Project 3</li>
+        </ul>
+        <button id="new-project-button">New Project</button>
+      </aside>
+      <section id="task-list">
+        <h2 id="project-title">Default</h2>
+        <ul>
+          <li>
+            <div class="task-container">
+              <div class="task-title">
+                <label>
+                  <input type="checkbox">
+                  <span>Task 1</span>
+                </label>
+              </div>
+              <div class="task-details">
+                <p class="task-date">Date: 01/01/2023</p>
+                <p class="task-description">Example description</p>
+              </div>
+              <div class="task-buttons">
+                <button class="details-button">Details</button>
+                <button class="edit-button">Edit</button>
+                <button class="delete-button">×</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="task-container">
+              <div class="task-title">
+                <label>
+                  <input type="checkbox">
+                  <span>Task 2</span>
+                </label>
+              </div>
+              <div class="task-details">
+                <p class="task-date">Date: 01/02/2023</p>
+                <p class="task-description">Example description</p>
+              </div>
+              <div class="task-buttons">
+                <button class="details-button">Details</button>
+                <button class="edit-button">Edit</button>
+                <button class="delete-button">×</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="task-container">
+              <div class="task-title">
+                <label>
+                  <input type="checkbox">
+                  <span>Task 3</span>
+                </label>
+              </div>
+              <div class="task-details">
+                <p class="task-date">Date: 01/03/2023</p>
+                <p class="task-description">Example description</p>
+              </div>
+              <div class="task-buttons">
+                <button class="details-button">Details</button>
+                <button class="edit-button">Edit</button>
+                <button class="delete-button">×</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <form id="new-task-form">
+          <input type="text" placeholder="New Task" required>
+          <button type="submit">Add Task</button>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <p>© 2022 To-Do List App</p>
+    </footer>
 <script src="main.js"></script>
 </body>
 </html>
