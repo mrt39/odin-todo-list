@@ -1,0 +1,142 @@
+body {
+    background-color: #f5f5f5;
+    font-family: sans-serif;
+    margin: 0;
+  }
+  
+  main {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  aside {
+    background-color: #e0e0e0;
+    min-width: 200px;
+    padding: 20px;
+  }
+  
+  section {
+    background-color: #fff;
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  h1, h2 {
+    margin: 0;
+  }
+
+
+  .task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .task-item .task-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .task-item .details-button {
+    background-color: #fff;
+    border: none;
+    color: #666;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+/* Part 3: Style for details, edit and date fields */
+/* hides the "details", "edit", and date fields by default and shows them only when the user hovers 
+over the task item. It also styles the date field with a smaller font size and a lighter color. */
+.task-list li .details-button, 
+.task-list li .edit-button, 
+.task-list li .date {
+  display: none;
+  margin-right: 10px;
+}
+
+.task-list li:hover .details-button, 
+.task-list li:hover .edit-button, 
+.task-list li:hover .date {
+  display: inline-block;
+}
+
+.task-list li .date {
+  font-size: 14px;
+  color: #aaa;
+  margin-right: 20px;
+}
+
+
+
+/* Edit button */
+.edit-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    outline: none;
+    padding: 0;
+  }
+  .edit-button:hover {
+    color: #1976d2;
+  }
+  
+  /* Date */
+  .date {
+    color: #999;
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 5px;
+  }
+  
+  /* Details button */
+  .details-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    outline: none;
+    padding: 0;
+  }
+  .details-button:hover {
+    color: #1976d2;
+  }
+
+
+
+/* Form styles */
+form#new-task-form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  form#new-task-form input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  form#new-task-form button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #2196F3;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  form#new-task-form button[type="submit"]:hover {
+    background-color: #0c7cd5;
+  }
