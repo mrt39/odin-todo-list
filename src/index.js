@@ -33,14 +33,14 @@ allProjects.push(projectDefault);
 
 
 //CONSTRUCTOR FOR TASK OBJECTS
-function Tasks(name, description, dueDate) {
+function Tasks(name, description, dueDate, priority) {
     //id  
     this.idNum = idNo
 
     this.name = name
     this.description = description
     this.dueDate = dueDate
-    this.importance = "importance"
+    this.priority = priority
     this.finished = false
 
     return idNo++
@@ -138,99 +138,6 @@ function selectedProjectDisplay(){
     displayTasks()
 }
 
-
-//-----------------------------------TODO----------------------------------------------
-//IN THE TASK LIST ON THE RIGHT SIDE OF THE PAGE, ONLY DISPLAY THE TASKS THAT THE USER HAS
-function displayTasks() {
-    //firstly, find the project that currently has it's currentlyOn property as true
-    const currentOnProject= allProjects.find((project) => project.currentlyOn===true);
-
-    const taskList = document.getElementById("task-list")
-    //remove the contents of the taskList
-    taskList.innerHTML = ""
-
-    //populate the task-list ul with the contents of the currentOnProject's tasks property
-    for (let i = 0; i < currentOnProject.tasks.length; i++) {
-
-        //the li
-        const li = document.createElement("li");
-        //the container div
-        const taskContainerDiv = document.createElement("div");
-        taskContainerDiv.classList.add('task-container');
-
-        //task title div
-        const taskTitleDiv = document.createElement("div");
-        taskTitleDiv.classList.add('task-title');
-
-        //label
-        const label = document.createElement("label");
-
-        //checkbox input
-        const checkboxInput = document.createElement("input");
-        checkboxInput.setAttribute('type', 'checkbox');
-
-        //span
-        const span = document.createElement("span");
-        span.innerText = currentOnProject.tasks[i].name;
-
-
-        //-----second div-----
-        const taskDetailsDiv = document.createElement("div");
-        taskDetailsDiv.classList.add('task-details');
-
-        //task date para
-        const taskDatePara = document.createElement("p");
-        taskDatePara.classList.add('task-date');
-        taskDatePara.innerText = currentOnProject.tasks[i].dueDate;
-
-        //task description para
-        const taskDescPara = document.createElement("p");
-        taskDescPara.classList.add('task-description');
-        taskDescPara.innerText = currentOnProject.tasks[i].description;
-
-        //-----third div-----
-        const taskButtonsDiv = document.createElement("div");
-        taskButtonsDiv.classList.add('task-buttons');
-
-        const detailsButton = document.createElement("button");
-        detailsButton.classList.add('details-button');
-        detailsButton.innerText = "Details"
-
-        const editButton = document.createElement("button");
-        editButton.classList.add('edit-button');
-        editButton.innerText = "Edit"
-
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add('delete-button');
-        deleteButton.innerText = "x"
-
-        //-------APPENDING----------
-        //---first div-----
-        label.appendChild(checkboxInput)
-        label.appendChild(span)
-        taskTitleDiv.appendChild(label)
-        taskContainerDiv.appendChild(taskTitleDiv)
-
-        //---second div---
-        taskDetailsDiv.appendChild(taskDatePara)
-        taskDetailsDiv.appendChild(taskDescPara)
-        taskContainerDiv.appendChild(taskDetailsDiv)
-
-        //---third div---
-        taskButtonsDiv.appendChild(detailsButton)
-        taskButtonsDiv.appendChild(editButton)
-        taskButtonsDiv.appendChild(deleteButton)
-        taskContainerDiv.appendChild(taskButtonsDiv)
-
-        //----append div to li and li to ul----
-        li.appendChild(taskContainerDiv)
-        taskList.appendChild(li)
- 
-      }
-}
-
-
-
 //newProject function 
 //below the button, a form with a textarea and a submit button and a cancel button will occur. 
 //submitting will create a Projects form 
@@ -303,10 +210,6 @@ function newProject() {
 
 
 
-
-
-
-
 //addeventlistener for "add task" button
 //when the user clicks on it, a window pops up in the middle of the DOM, everything else on the background blurs out in gray
 //and a form appears, from which the user can write and select things
@@ -325,6 +228,7 @@ function addNewTask() {
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('name', 'name');
+    nameInput.required = true
     form.appendChild(nameLabel);
     form.appendChild(nameInput);
     
@@ -356,9 +260,38 @@ function addNewTask() {
     dateInput.setAttribute('type', 'date');
     dateInput.setAttribute('name', 'date');
     dateInput.setAttribute('min', currentDate);
+    dateInput.required = true
     form.appendChild(dateLabel);
     form.appendChild(dateInput);
-    
+
+    //Priority select <select> tag, displayed as buttons
+    const priorityLabel = document.createElement('label');
+    priorityLabel.textContent = 'Priority: ';
+    const select = document.createElement('select');
+    select.setAttribute('id', 'prioritySelect');
+    select.multiple = true
+    select.required = true
+    //options
+    const low = document.createElement('option');
+    low.textContent = "Low"
+    low.setAttribute('id', 'low');
+    low.setAttribute('value', 'low');
+    const medium = document.createElement('option');
+    medium.textContent = "Medium"
+    medium.setAttribute('id', 'medium');
+    medium.setAttribute('value', 'medium');
+    const high = document.createElement('option');
+    high.textContent = "High"
+    high.setAttribute('id', 'high');
+    high.setAttribute('value', 'high');
+    //append
+    select.appendChild(low);
+    select.appendChild(medium);
+    select.appendChild(high);
+    form.appendChild(priorityLabel);
+    form.appendChild(select);
+
+    //submit button
     const addButton = document.createElement('button');
     addButton.textContent = 'Add Task';
     addButton.setAttribute('type', 'submit');
@@ -378,7 +311,7 @@ function addNewTask() {
       const formattedDate = format(new Date(dateInput.value), 'd MMMM')
 
       //create a new task
-      var newTaskVariable = new Tasks (nameInput.value, descInput.value, formattedDate)
+      var newTaskVariable = new Tasks (nameInput.value, descInput.value, formattedDate, select.value)
 
       //task also gets appended to the project object within the allProjects array, which has its "currentlyOn" property as true
       //so, find the object that has it's currentlyOn property as true
@@ -403,7 +336,126 @@ function addNewTask() {
 }
 
 
+//display tasks for the selected project
+function displayTasks() {
+    //firstly, find the project that currently has it's currentlyOn property as true
+    const currentOnProject= allProjects.find((project) => project.currentlyOn===true);
 
+    const taskList = document.getElementById("task-list")
+    //remove the contents of the taskList
+    taskList.innerHTML = ""
+
+    //populate the task-list ul with the contents of the currentOnProject's tasks property
+    for (let i = 0; i < currentOnProject.tasks.length; i++) {
+
+        //the li
+        const li = document.createElement("li");
+        //the container div
+        const taskContainerDiv = document.createElement("div");
+        taskContainerDiv.classList.add('task-container');
+
+        //task title div
+        const taskTitleDiv = document.createElement("div");
+        taskTitleDiv.classList.add('task-title');
+
+        //label
+        const label = document.createElement("label");
+
+        //checkbox input
+        const checkboxInput = document.createElement("input");
+        checkboxInput.setAttribute('type', 'checkbox');
+
+        //span
+        const span = document.createElement("span");
+        span.innerText = currentOnProject.tasks[i].name;
+
+
+        //-----second div-----
+        const taskDetailsDiv = document.createElement("div");
+        taskDetailsDiv.classList.add('task-details');
+
+        //task date para
+        const taskDatePara = document.createElement("p");
+        taskDatePara.classList.add('task-date');
+        taskDatePara.innerText = currentOnProject.tasks[i].dueDate;
+
+        //task description para
+        const taskDescPara = document.createElement("p");
+        taskDescPara.classList.add('task-description');
+        taskDescPara.innerText = currentOnProject.tasks[i].description;
+
+        //-----third div-----
+        const taskButtonsDiv = document.createElement("div");
+        taskButtonsDiv.classList.add('task-buttons');
+
+        const detailsButton = document.createElement("button");
+        detailsButton.classList.add('details-button');
+        detailsButton.innerText = "Details"
+        detailsButton.addEventListener("click", showDetails);
+
+        const editButton = document.createElement("button");
+        editButton.classList.add('edit-button');
+        editButton.innerText = "Edit"
+        editButton.addEventListener("click", editTask);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add('delete-button');
+        deleteButton.innerText = "x"
+        deleteButton.addEventListener("click", function(){
+            deleteTask(i)
+          })
+
+        //-------APPENDING----------
+        //---first div-----
+        label.appendChild(checkboxInput)
+        label.appendChild(span)
+        taskTitleDiv.appendChild(label)
+        taskContainerDiv.appendChild(taskTitleDiv)
+
+        //---second div---
+        taskDetailsDiv.appendChild(taskDatePara)
+        taskDetailsDiv.appendChild(taskDescPara)
+        taskContainerDiv.appendChild(taskDetailsDiv)
+
+        //---third div---
+        taskButtonsDiv.appendChild(detailsButton)
+        taskButtonsDiv.appendChild(editButton)
+        taskButtonsDiv.appendChild(deleteButton)
+        taskContainerDiv.appendChild(taskButtonsDiv)
+
+        //----append div to li and li to ul----
+        li.appendChild(taskContainerDiv)
+        taskList.appendChild(li)
+ 
+      }
+}
+
+
+
+//the functionality of the "details" button
+function showDetails() {
+
+}
+
+
+//the functionality of the "edit" button
+function editTask() {
+
+}
+
+
+//the functionality of the "delete" button
+function deleteTask(indexNumber) {
+
+    //firstly, find the project that currently has it's currentlyOn property as true
+    const currentOnProject= allProjects.find((project) => project.currentlyOn===true);
+
+    //from the currently on project, remove the task from the "tasks" array, with the indexNumber we got from the function call
+    currentOnProject.tasks.splice(indexNumber, 1);
+
+    //refresh the display of the tasks
+    displayTasks()
+}
 
 
 //the functionality of the "edit" button
