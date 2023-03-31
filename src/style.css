@@ -82,14 +82,29 @@ body {
     color: green;
   }
 
+  #prioritySelect #low:checked{
+    background-color:green;
+    color: white;
+  }
+
   #prioritySelect #medium{
     border:darkorange solid 3px;
     color: darkorange;
   }
 
+  #prioritySelect #medium:checked{
+    background-color:darkorange;
+    color: white;
+  }
+
   #prioritySelect #high{
     border:red solid 3px;
     color: red;
+  }
+
+  #prioritySelect #high:checked{
+    background-color:red;
+    color: white;
   }
 
 

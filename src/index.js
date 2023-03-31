@@ -307,11 +307,8 @@ function addNewTask() {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
 
-      //sort the date format
-      const formattedDate = format(new Date(dateInput.value), 'd MMMM')
-
       //create a new task
-      var newTaskVariable = new Tasks (nameInput.value, descInput.value, formattedDate, select.value)
+      var newTaskVariable = new Tasks (nameInput.value, descInput.value, dateInput.value, select.value)
 
       //task also gets appended to the project object within the allProjects array, which has its "currentlyOn" property as true
       //so, find the object that has it's currentlyOn property as true
@@ -374,10 +371,13 @@ function displayTasks() {
         const taskDetailsDiv = document.createElement("div");
         taskDetailsDiv.classList.add('task-details');
 
+        //sort the date format
+        const formattedDate = format(new Date(currentOnProject.tasks[i].dueDate), 'd MMMM')
+
         //task date para
         const taskDatePara = document.createElement("p");
         taskDatePara.classList.add('task-date');
-        taskDatePara.innerText = currentOnProject.tasks[i].dueDate;
+        taskDatePara.innerText = formattedDate;
 
         //task description para
         const taskDescPara = document.createElement("p");
@@ -396,7 +396,9 @@ function displayTasks() {
         const editButton = document.createElement("button");
         editButton.classList.add('edit-button');
         editButton.innerText = "Edit"
-        editButton.addEventListener("click", editTask);
+        editButton.addEventListener("click", function(){
+            editTask(i)
+          })
 
         const deleteButton = document.createElement("button");
         deleteButton.classList.add('delete-button');
@@ -439,7 +441,146 @@ function showDetails() {
 
 
 //the functionality of the "edit" button
-function editTask() {
+function editTask(indexNumber) {
+    
+    //find the object that has it's currentlyOn property as true
+    const currentProject= allProjects.find((project) => project.currentlyOn===true);
+    
+    // Create a div for the modal overlay
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    
+    // Create a form element for the task input fields
+    const form = document.createElement('form');
+    form.classList.add('task-form');
+    
+    // Add input fields to the form element
+    const nameLabel = document.createElement('label');
+    nameLabel.textContent = 'Name: ';
+    const nameInput = document.createElement('input');
+    nameInput.setAttribute('type', 'text');
+    nameInput.setAttribute('name', 'name');
+    nameInput.required = true
+    nameInput.value = currentProject.tasks[indexNumber].name
+    form.appendChild(nameLabel);
+    form.appendChild(nameInput);
+    
+    const descLabel = document.createElement('label');
+    descLabel.textContent = 'Description: ';
+    const descInput = document.createElement('input');
+    descInput.setAttribute('type', 'text');
+    descInput.setAttribute('name', 'description');
+    descInput.value = currentProject.tasks[indexNumber].description
+    form.appendChild(descLabel);
+    form.appendChild(descInput);
+
+
+    //below in the dateinput, we don't allow user to select a past date for a task, so we are adding the date input field
+    //a "min" property: (dateInput.setAttribute('min', currentDate);)
+    //get the current date from js's built in functions
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth()+1;
+    let year = date.getFullYear();
+    //arrange the date in the yy-mm-dd format
+    let currentDate = year + '-'
+    + ('0' + (month)).slice(-2) + '-'
+    + ('0' + day).slice(-2) ;
+    console.log(currentDate)
+    
+    const dateLabel = document.createElement('label');
+    dateLabel.textContent = 'Date: ';
+    const dateInput = document.createElement('input');
+    dateInput.setAttribute('type', 'date');
+    dateInput.setAttribute('name', 'date');
+    dateInput.setAttribute('min', currentDate);
+    dateInput.required = true
+    dateInput.value = currentProject.tasks[indexNumber].dueDate
+    form.appendChild(dateLabel);
+    form.appendChild(dateInput);
+
+    //Priority select <select> tag, displayed as buttons
+    const priorityLabel = document.createElement('label');
+    priorityLabel.textContent = 'Priority: ';
+    const select = document.createElement('select');
+    select.setAttribute('id', 'prioritySelect');
+    select.multiple = true
+    select.required = true
+    //options
+    const low = document.createElement('option');
+    low.textContent = "Low"
+    low.setAttribute('id', 'low');
+    low.setAttribute('value', 'low');
+    const medium = document.createElement('option');
+    medium.textContent = "Medium"
+    medium.setAttribute('id', 'medium');
+    medium.setAttribute('value', 'medium');
+    const high = document.createElement('option');
+    high.textContent = "High"
+    high.setAttribute('id', 'high');
+    high.setAttribute('value', 'high');
+    //append
+    select.appendChild(low);
+    select.appendChild(medium);
+    select.appendChild(high);
+    form.appendChild(priorityLabel);
+    form.appendChild(select);
+
+    //set the priority value as default 
+    //we need to get the selected task's priority and set it as the selected option in the edit window.
+    //to do that, we need to loop through the id's of every child node of the <select> element 
+    //and see if our value matches their id
+    var nodes = select.childNodes;
+    for(var i=0; i<nodes.length; i++) {
+        if (nodes[i].id === currentProject.tasks[indexNumber].priority) {
+             nodes[i].selected = true;
+         }
+    }   
+
+    //submit button
+    const addButton = document.createElement('button');
+    addButton.textContent = 'Update Task';
+    addButton.setAttribute('type', 'submit');
+    form.appendChild(addButton);
+    
+    // Add the form to the overlay
+    overlay.appendChild(form);
+    
+    // Add the overlay to the DOM
+    document.body.appendChild(overlay);
+    
+    // Add event listener to remove the overlay when the form is submitted
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      //update the current task
+      
+      currentProject.tasks[indexNumber].name = nameInput.value
+      currentProject.tasks[indexNumber].description = descInput.value
+      currentProject.tasks[indexNumber].dueDate = dateInput.value
+      currentProject.tasks[indexNumber].priority = select.value
+      
+      //var newTaskVariable = new Tasks (nameInput.value, descInput.value, dateInput.value, select.value)
+
+      //task also gets appended to the project object within the allProjects array, which has its "currentlyOn" property as true
+      //so, find the object that has it's currentlyOn property as true
+      //const currentProject= allProjects.find((project) => project.currentlyOn===true);
+
+      console.log(currentProject)
+      //append the task to the "tasks" property of this object
+      //currentProject.tasks.push(newTaskVariable)
+
+      console.log(currentProject.tasks)
+
+      //remove overlay when the form is submitted, so display returns to normal
+      overlay.remove();
+
+      //display tasks when submitted
+      displayTasks()
+
+    });
+
+    
 
 }
 
@@ -458,11 +599,11 @@ function deleteTask(indexNumber) {
 }
 
 
-//the functionality of the "edit" button
-//a similar window from the "add" task opens up, with the fields already filled up with info 
-//from the existing task. 
-//how do i get the info from the task though? how do i select the task? what do i pass in here?
 
 
-
-
+//-------------------------------------------------TODO-------------------------------------------------------
+//showdetails button.
+//get some cool style for the body first
+//display something in each task for the different difficulty settings
+//then get some cool style for the add task button
+//replace the description with a textarea 
