@@ -1,3 +1,7 @@
+import { compareAsc, format } from 'date-fns'
+
+
+
 //array for storing the projects 
 var allProjects = [];
 //variable for storing the id number for each individual Task object
@@ -5,7 +9,7 @@ var idNo = 1
 
 //clicking on add task button starts the showtaskform function
 const addTaskButton = document.getElementById("addTask");
-addTaskButton.addEventListener("click", showTaskForm);
+addTaskButton.addEventListener("click", addNewTask);
 
 
 //clicking on "new project" button starts the newProject function
@@ -29,13 +33,13 @@ allProjects.push(projectDefault);
 
 
 //CONSTRUCTOR FOR TASK OBJECTS
-function Tasks(name) {
+function Tasks(name, description, dueDate) {
     //id  
     this.idNum = idNo
 
     this.name = name
-    this.description = "description"
-    this.dueDate = "dueDate"
+    this.description = description
+    this.dueDate = dueDate
     this.importance = "importance"
     this.finished = false
 
@@ -53,6 +57,8 @@ console.log(task1.idNum)
 console.log(task1.name)
 console.log(task2.idNum)
 console.log(task2.name)
+
+
 
 
 //edit button
@@ -133,7 +139,7 @@ function selectedProjectDisplay(){
 }
 
 
-/* //-----------------------------------TODO----------------------------------------------
+//-----------------------------------TODO----------------------------------------------
 //IN THE TASK LIST ON THE RIGHT SIDE OF THE PAGE, ONLY DISPLAY THE TASKS THAT THE USER HAS
 function displayTasks() {
     //firstly, find the project that currently has it's currentlyOn property as true
@@ -145,6 +151,7 @@ function displayTasks() {
 
     //populate the task-list ul with the contents of the currentOnProject's tasks property
     for (let i = 0; i < currentOnProject.tasks.length; i++) {
+
         //the li
         const li = document.createElement("li");
         //the container div
@@ -218,13 +225,9 @@ function displayTasks() {
         //----append div to li and li to ul----
         li.appendChild(taskContainerDiv)
         taskList.appendChild(li)
-
+ 
       }
-
-
-
-
-} */
+}
 
 
 
@@ -307,7 +310,7 @@ function newProject() {
 //addeventlistener for "add task" button
 //when the user clicks on it, a window pops up in the middle of the DOM, everything else on the background blurs out in gray
 //and a form appears, from which the user can write and select things
-function showTaskForm() {
+function addNewTask() {
     // Create a div for the modal overlay
     const overlay = document.createElement('div');
     overlay.classList.add('overlay');
@@ -332,12 +335,27 @@ function showTaskForm() {
     descInput.setAttribute('name', 'description');
     form.appendChild(descLabel);
     form.appendChild(descInput);
+
+
+    //below in the dateinput, we don't allow user to select a past date for a task, so we are adding the date input field
+    //a "min" property: (dateInput.setAttribute('min', currentDate);)
+    //get the current date from js's built in functions
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth()+1;
+    let year = date.getFullYear();
+    //arrange the date in the yy-mm-dd format
+    let currentDate = year + '-'
+    + ('0' + (month)).slice(-2) + '-'
+    + ('0' + day).slice(-2) ;
+    console.log(currentDate)
     
     const dateLabel = document.createElement('label');
     dateLabel.textContent = 'Date: ';
     const dateInput = document.createElement('input');
     dateInput.setAttribute('type', 'date');
     dateInput.setAttribute('name', 'date');
+    dateInput.setAttribute('min', currentDate);
     form.appendChild(dateLabel);
     form.appendChild(dateInput);
     
@@ -355,13 +373,12 @@ function showTaskForm() {
     // Add event listener to remove the overlay when the form is submitted
     form.addEventListener('submit', (event) => {
       event.preventDefault();
-      //create a new name for the new task
-      var newTaskName = "task"+idNo
-      // window[newTaskName] is how you use a dynamic variable name. 
-      //https://stackoverflow.com/questions/5117127/use-dynamic-variable-names-in-javascript
-      window[newTaskName] = new Tasks (nameInput.value)
-      console.log(window[newTaskName])
 
+      //sort the date format
+      const formattedDate = format(new Date(dateInput.value), 'd MMMM')
+
+      //create a new task
+      var newTaskVariable = new Tasks (nameInput.value, descInput.value, formattedDate)
 
       //task also gets appended to the project object within the allProjects array, which has its "currentlyOn" property as true
       //so, find the object that has it's currentlyOn property as true
@@ -369,31 +386,24 @@ function showTaskForm() {
 
       console.log(currentProject)
       //append the task to the "tasks" property of this object
-      currentProject.tasks.push(window[newTaskName])
+      currentProject.tasks.push(newTaskVariable)
 
       console.log(currentProject.tasks)
 
       //remove overlay when the form is submitted, so display returns to normal
       overlay.remove();
 
+      //display tasks when submitted
+      displayTasks()
+
     });
 
     
-/*     // Blur out the background
-    const mainContent = document.querySelector('#main-content');
-    mainContent.style.filter = 'blur(5px)'; */
-    
-/*     // Disable scrolling on the body
-    document.body.style.overflow = 'hidden'; */
+
 }
 
 
-/* window["task"+idNo] */
-/* console.log("new task name: " + newTaskName + " new name of your task: " + newTaskName.name + " new id: " + newTaskName.idNum)
- */
 
-//addeventlistener for "new project" button
-//just a textfield opens up under it, the user can press name and submit
 
 
 //the functionality of the "edit" button
