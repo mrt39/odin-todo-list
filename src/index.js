@@ -44,27 +44,9 @@ function Tasks(name, description, dueDate, priority) {
     this.finished = false
 
     return idNo++
-/*     this.sayName = function() {
-      console.log(name)
-    } */
+
 
 }
-
-const task1 = new Tasks ("keko")
-const task2 = new Tasks ("zirto")
-
-console.log(task1.idNum) 
-console.log(task1.name)
-console.log(task2.idNum)
-console.log(task2.name)
-
-
-
-
-//edit button
-
-//delete button 
-//remove.self
 
 displayProjects()
 selectedProjectDisplay()
@@ -78,14 +60,61 @@ function displayProjects() {
     //remove the contents of the projectList
     projectList.innerHTML = ""
 
+    
+    //append the Default (allprojects[0]) seperate from the others 
+    //because we are not going to add a delete icon next to it, so user won't be able to delete.
+    const defaultProject = document.createElement("li");
+    defaultProject.classList.add('projectName1');
+
+    const defaultItem = document.createElement("div");
+    defaultItem.classList.add('project-item')
+
+    const defaultParaContainer = document.createElement("div");
+    defaultParaContainer.classList.add('projectParaContainer')
+    //set the width 100 so it gets selected when the user clicks outside of the text as well
+    defaultParaContainer.style.width = "100%";
+
+    const defaultPara = document.createElement("p");
+    defaultPara.textContent = allProjects[0].name;
+
+    defaultParaContainer.appendChild(defaultPara);
+    defaultItem.appendChild(defaultParaContainer);
+    defaultProject.appendChild(defaultItem);
+    projectList.appendChild(defaultProject);
+
     //populate the project-list ul with the contents of the allProjects array
-    for (let i = 0; i < allProjects.length; i++) {
+    for (let i = 1; i < allProjects.length; i++) {
         const li = document.createElement("li");
         li.classList.add('projectName1')
-        li.textContent = allProjects[i].name;
+
+        const projectItem = document.createElement("div");
+        projectItem.classList.add('project-item')
+
+        const projectParaContainer = document.createElement("div");
+        projectItem.classList.add('projectParaContainer')
+
+        const projectPara = document.createElement("p");
+        projectPara.textContent = allProjects[i].name;
+
+        const deleteButton = document.createElement("div");
+        deleteButton.classList.add('delete-project-button1')
+        deleteButton.innerHTML = "<svg class= 'delete-svg' width='32px' height='32px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'> <path fill-rule='evenodd' clip-rule='evenodd' d='M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V6H17H19C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V8H5C4.44772 8 4 7.55228 4 7C4 6.44772 4.44772 6 5 6H7H9V5ZM10 8H8V18C8 18.5523 8.44772 19 9 19H15C15.5523 19 16 18.5523 16 18V8H14H10ZM13 6H11V5H13V6ZM10 9C10.5523 9 11 9.44772 11 10V17C11 17.5523 10.5523 18 10 18C9.44772 18 9 17.5523 9 17V10C9 9.44772 9.44772 9 10 9ZM14 9C14.5523 9 15 9.44772 15 10V17C15 17.5523 14.5523 18 14 18C13.4477 18 13 17.5523 13 17V10C13 9.44772 13.4477 9 14 9Z' fill='currentColor'></path> </g></svg>"
+
+        //functionality of the delete button
+        deleteButton.addEventListener("click", function(){
+            deleteProject(i)
+          })
+
+        projectParaContainer.appendChild(projectPara)
+        projectItem.appendChild(projectParaContainer);
+        projectItem.appendChild(deleteButton);
+        li.appendChild(projectItem);
         projectList.appendChild(li);
-        selectedProject()
+
       }
+
+    
+    selectedProject()
 
 }
 
@@ -93,10 +122,11 @@ function displayProjects() {
 // function for seeing which project the user has selected
 function selectedProject() {
 // Add event listener to see which project the user has selected
-const projectsAll = document.querySelectorAll(".projectName1");
+const projectsAll = document.querySelectorAll(".projectParaContainer");
 
 projectsAll.forEach(project => {
     project.addEventListener('click', function (){
+
         
         //firstly, find the project that currently has it's currentlyOn property as true
         const currentOnProject= allProjects.find((project) => project.currentlyOn===true);
@@ -105,7 +135,17 @@ projectsAll.forEach(project => {
         
         //then, we need to turn the clicked project's currentlyOn property to "true"
         //so first, find the project that has the same name as the clicked one
-        const clickedProject= allProjects.find((project) => project.name===this.innerText);
+        const clickedProject= allProjects.find((project) => project.name===this.firstChild.innerText);
+        
+        //when we delete a project, it is clicked (we click the delete icon which is ON the project)
+        //so when this happens, we don't want to assign currentlyOn = true to a deleted element.
+        //so if the clickedProject returns undefined through the find function (which means it couldn't find it)
+        //which means we reached here by deleting that project
+        //just make the default project (allProjects[0]) selected.
+        if (clickedProject == undefined){
+            allProjects[0].currentlyOn = true;
+            return
+        }
         clickedProject.currentlyOn = true;
 
         ////display projects in the allProjects array
@@ -174,7 +214,7 @@ function newProject() {
         //remove the form from DOM
         form.remove()
         //display the "New Project" button again
-        newProjectButton.style.display = 'block';
+        newProjectButton.style.display = 'flex';
 
     });
 
@@ -187,7 +227,7 @@ function newProject() {
         //remove the form from DOM
         form.remove()
         //display the "New Project" button again
-        newProjectButton.style.display = 'block';
+        newProjectButton.style.display = 'flex';
 
         //storing the new object in a variable
         let newProject = new Projects (nameInput.value)
@@ -205,6 +245,29 @@ function newProject() {
 
     }); 
 
+
+}
+
+
+function deleteProject(indexNumber){
+
+    //so, find the object that has it's currentlyOn property as true
+    const currentProject= allProjects.find((project) => project.currentlyOn===true);
+    
+    //make the default project (allProjects[0]) the selected project
+    currentProject.currentlyOn = false
+
+    //make the default project (allProjects[0]) the selected project
+    allProjects[0].currentlyOn = true
+
+    //from the currently on project, remove the task from the "tasks" array, with the indexNumber we got from the function call
+    allProjects.splice(indexNumber, 1);
+
+    //refresh the display of the projects
+    displayProjects()
+
+    //run the selectedProjectDisplay function to display the selected project
+    selectedProjectDisplay()
 
 }
 
@@ -379,10 +442,6 @@ function displayTasks() {
         taskDatePara.classList.add('date');
         taskDatePara.innerText = formattedDate;
 
-/*         //task description para
-        const taskDescPara = document.createElement("p");
-        taskDescPara.classList.add('task-description');
-        taskDescPara.innerText = currentOnProject.tasks[i].description; */
 
         //-----third div-----
         const taskButtonsDiv = document.createElement("div");
@@ -394,16 +453,16 @@ function displayTasks() {
         detailsButton.addEventListener("click", function(){
             showDetails(i)
           })
-        const editButton = document.createElement("button");
+        const editButton = document.createElement("div");
         editButton.classList.add('edit-button');
-        editButton.innerText = "Edit"
+        editButton.innerHTML = "<svg class= 'edit-svg' width='32px' height='32px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'> <path opacity='0.15' d='M8 16H12L18 10L14 6L8 12V16Z' fill='currentColor'></path> <path d='M14 6L8 12V16H12L18 10M14 6L17 3L21 7L18 10M14 6L18 10M10 4L4 4L4 20L20 20V14' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'></path> </g></svg>"
         editButton.addEventListener("click", function(){
             editTask(i)
           })
 
-        const deleteButton = document.createElement("button");
+        const deleteButton = document.createElement("div");
         deleteButton.classList.add('delete-button');
-        deleteButton.innerText = "x"
+        deleteButton.innerHTML = "<svg class= 'delete-svg' width='32px' height='32px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'> <path fill-rule='evenodd' clip-rule='evenodd' d='M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V6H17H19C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V8H5C4.44772 8 4 7.55228 4 7C4 6.44772 4.44772 6 5 6H7H9V5ZM10 8H8V18C8 18.5523 8.44772 19 9 19H15C15.5523 19 16 18.5523 16 18V8H14H10ZM13 6H11V5H13V6ZM10 9C10.5523 9 11 9.44772 11 10V17C11 17.5523 10.5523 18 10 18C9.44772 18 9 17.5523 9 17V10C9 9.44772 9.44772 9 10 9ZM14 9C14.5523 9 15 9.44772 15 10V17C15 17.5523 14.5523 18 14 18C13.4477 18 13 17.5523 13 17V10C13 9.44772 13.4477 9 14 9Z' fill='currentColor'></path> </g></svg>"
         deleteButton.addEventListener("click", function(){
             deleteTask(i)
           })
@@ -417,7 +476,6 @@ function displayTasks() {
 
         //---second div---
         taskDetailsDiv.appendChild(taskDatePara)
-/*         taskDetailsDiv.appendChild(taskDescPara) */
         taskContainerDiv.appendChild(taskDetailsDiv)
 
         //---third div---
@@ -667,7 +725,8 @@ function deleteTask(indexNumber) {
 //get some cool style for the body first
 //display something in each task for the different difficulty settings (red color etc)
 //make it so that when the checkbox is ticked, the task is üstü çizili
-//ADD TASK WINDOW
+//add functionality in the "add project" function, project name must be unique
+//--ADD TASK WINDOW--
 //replace the description with a textarea 
 //add a "close" to the add task window
 //get some cool style for the add task window

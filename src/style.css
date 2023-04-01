@@ -88,17 +88,26 @@ color:Red
 
 /* ------------------------------------------------------------------------*/
 
-
+html, 
+body {
+    height: 100%;
+}
 
 body {
-    background-color: #f5f5f5;
+    background-color: #f2f2f2;
     font-family: sans-serif;
     margin: 0;
   }
   
   main {
+    min-height: 50%;
+    margin-top: 50px;
+    padding: 20px;
+  }
+
+  header, main {
     display: flex;
-    min-height: 100vh;
+    justify-content: center;
   }
   
   aside {
@@ -113,29 +122,181 @@ body {
     padding: 20px;
   }
   
-  h1, h2 {
+  h1 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #333;
     margin: 0;
   }
 
+  header {
+  background-color: #5d5d5d;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  padding: 1rem;
+}
+
+#main-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+/* -------------------------------------------------------- PROJECTS SECTION -------------------------------------------------------- */
+/* Add a background color and adjust font styles for the Projects section */
+aside {
+  background-color: #f7f7f7;
+  padding: 1em;
+  font-family: Arial, sans-serif;
+  font-size: 1.2em;
+}
+
+/* Style the Projects heading */
+aside h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Style the project list */
+#project-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the project list items */
+#project-list li {
+  
+  cursor: pointer;
+}
+
+/* Add a hover effect to the project list items */
+#project-list li:hover {
+  font-size: 1.3em;
+}
+
+/* Style the new project button */
+#new-project-button {
+  background-color: #0099ff;
+  color: white;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-top: 1em;
+
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  border-radius: 50%; /* Makes the button completely round */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Adds a shadow to the button */
+}
+
+/* Add a hover effect to the new project button */
+#new-project-button:hover {
+  background-color: #0077cc;
+}
+
+.project-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px;
+}
+
+
+/* Delete button is only visible when we hover on the LI element */
+.projectName1 .delete-project-button1{
+  display: none;
+}
+.projectName1:hover .delete-project-button1{
+  display: inline-block;
+}
+
+
+/* --------------------------------------------------------***-------------------------------------------------------- */
+
+/* -------------------------------------------------------- PART 3 -------------------------------------------------------- */
+#task-display {
+  margin: 0 0 0 250px;
+  padding: 20px;
+  border-left: 2px solid #f5f5f5;
+
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+
+  border-radius: 10px;
+  padding: 30px;
+  margin: 20px;
+
+
+  position: relative;
+  
+  
+}
+
+.project-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0d47a1;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* -------------------------------------------------------- END OF PART 3 -------------------------------------------------------- */
 
   .task-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+    padding: 5px;
+
+    /* border-bottom: 1px solid #ccc; */
+
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
   }
+
   
-  .task-item .task-title {
-    margin: 0;
-    font-size: 20px;
+  
+  .task-title input[type="checkbox"] {
+    margin-right: 10px;
+  }
+
+  .task-title span {
+    font-size: 1.2rem;
     font-weight: bold;
+    margin: 0;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .task-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
   }
   
   .task-item .details-button,
-  .task-item .edit-button {
+  .task-item .edit-button,
+  .task-item .delete-button {
     background-color: #fff;
     border: none;
+    border-radius: 5px;
     color: #666;
     font-size: 16px;
     font-weight: bold;
@@ -144,23 +305,22 @@ body {
   }
 
 
+
 /* Style for details, edit and date fields */
 /* hides the "details", "edit", and date fields by default and shows them only when the user hovers 
 over the task item. It also styles the date field with a smaller font size and a lighter color. */
 .task-list li .details-button, 
-.task-list li .edit-button, 
-.task-list li .date {
-  display: none;
-  margin-right: 10px;
+.task-list li .edit-button,
+.task-list li .delete-button{
+  visibility: hidden;
+  margin-right: 20px;
 }
 
 .task-list li:hover .details-button, 
 .task-list li:hover .edit-button, 
-.task-list li:hover .date {
-  display: inline-block;
+.task-list li:hover .delete-button {
+  visibility: visible;
 }
-
-
 
 
 /* Edit button */
@@ -195,7 +355,9 @@ over the task item. It also styles the date field with a smaller font size and a
     outline: none;
     padding: 0;
   }
-  .details-button:hover {
+  .details-button:hover,
+  .edit-svg:hover,
+  .delete-svg:hover {
     color: #1976d2;
   }
 
@@ -215,3 +377,23 @@ over the task item. It also styles the date field with a smaller font size and a
   #addTask:hover {
     background-color: #0c7cd5;
   }
+
+
+/* Styling for the footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* Styling for the copyright text */
+footer p {
+  margin: 0;
+  font-size: 0.8rem;
+}
