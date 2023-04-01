@@ -13,14 +13,17 @@
       <aside>
         <h2>Projects</h2>
         <ul id="project-list">
+          <li class="projectName1">Default</li>
+          <li class="projectName1">Today</li>
+          <li class="projectName1">Tomorrow</li>
         </ul>
         <button id="new-project-button">New Project</button>
       </aside>
       <section id="task-display">
         <h2 class="project-title">Default</h2>
-        <ul id="task-list">
+        <ul id="task-list" class="task-list">
           <li>
-            <div class="task-container">
+            <div class="task-item">
               <div class="task-title">
                 <label>
                   <input type="checkbox">
@@ -39,7 +42,7 @@
             </div>
           </li>
           <li>
-            <div class="task-container">
+            <div class="task-item">
               <div class="task-title">
                 <label>
                   <input type="checkbox">
@@ -57,31 +60,8 @@
               </div>
             </div>
           </li>
-          <li>
-            <div class="task-container">
-              <div class="task-title">
-                <label>
-                  <input type="checkbox">
-                  <span>Task 3</span>
-                </label>
-              </div>
-              <div class="task-details">
-                <p class="task-date">Date: 01/03/2023</p>
-                <p class="task-description">Example description</p>
-              </div>
-              <div class="task-buttons">
-                <button class="details-button">Details</button>
-                <button class="edit-button">Edit</button>
-                <button class="delete-button">×</button>
-              </div>
-            </div>
-          </li>
         </ul>
-        <form id="new-task-form">
-          <input type="text" placeholder="New Task" required>
-          <button type="submit">Add Task</button>
-        </form>
-        <button id="addTask">ADD TASK YOOOOO</button>
+        <button id="addTask">Add Task</button>
       </section>
     </main>
     <footer>
