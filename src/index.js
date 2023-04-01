@@ -223,7 +223,28 @@ function newProject() {
     form.addEventListener('submit', (event) => {
         //preventdefault so it doesn't actually submit.
         event.preventDefault();
+
+
+        //alert for the user trying to add a project with the same name
+        const alertSpan = document.createElement('span');
+        alertSpan.classList.add('alertSpan')
+        alertSpan.innerText = "Project name must be unique!"
+
+        //check if there is a project with this name
+        const projectSameName= allProjects.find((project) => project.name===nameInput.value);
+        //if there is one, projectSameName variable will not be undefined, then we display the alertspan alert we defined above
+        if(projectSameName != undefined) {
+
+           form.parentNode.insertBefore(alertSpan, form.nextSibling)
+            return
+        }
       
+        //after a successful submission, if we have displayed the error message before, remove it
+        let x = document.querySelector(".alertSpan")
+        if (x) {
+            x.remove()
+        }
+
         //remove the form from DOM
         form.remove()
         //display the "New Project" button again
@@ -425,9 +446,33 @@ function displayTasks() {
         const checkboxInput = document.createElement("input");
         checkboxInput.setAttribute('type', 'checkbox');
 
+        //if the task's finished property is true, display the checkbox as checked.
+        if (currentOnProject.tasks[i].finished === true) {
+            checkboxInput.checked = true
+        }
+
+        //addevent listener for checkbox, so if it's checked, add the "checked-span class"
+        //and change the "finished" property of this object to "true"
+        checkboxInput.addEventListener('change', function() {
+            if (this.checked) {
+              console.log("Checkbox is checked..");
+              span.classList.add('checked-span');
+              currentOnProject.tasks[i].finished = true
+            } else {
+              span.style.textDecoration = "none";
+              span.classList.remove('checked-span');
+              currentOnProject.tasks[i].finished = false
+            }
+          });
+
         //span
         const span = document.createElement("span");
         span.innerText = currentOnProject.tasks[i].name;
+
+        //if the task's finished property is true, make the span have the "checked-span" class.
+        if (currentOnProject.tasks[i].finished === true) {
+            span.classList.add('checked-span');
+        }
 
 
         //-----second div-----
@@ -724,8 +769,6 @@ function deleteTask(indexNumber) {
 //-------------------------------------------------TODO-------------------------------------------------------
 //get some cool style for the body first
 //display something in each task for the different difficulty settings (red color etc)
-//make it so that when the checkbox is ticked, the task is üstü çizili
-//add functionality in the "add project" function, project name must be unique
 //--ADD TASK WINDOW--
 //replace the description with a textarea 
 //add a "close" to the add task window

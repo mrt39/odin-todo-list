@@ -219,6 +219,10 @@ aside h2 {
   display: inline-block;
 }
 
+.alertSpan{
+  color: white;
+  background-color: red;
+}
 
 /* --------------------------------------------------------***-------------------------------------------------------- */
 
@@ -282,6 +286,12 @@ aside h2 {
     margin: 0;
     color: #333;
     text-decoration: none;
+  }
+
+  .checked-span{
+    font-weight: normal !important;
+    color: gray!important;
+    text-decoration: line-through!important;
   }
 
   .task-buttons{
