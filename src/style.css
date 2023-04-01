@@ -1,3 +1,95 @@
+/* STYLE FOR THE ADD TASK WINDOW*/
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  backdrop-filter: blur(5px); /* for blurring effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-form {
+  background-color: #fff; /* white background for the form */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* for a shadow effect */
+  max-width: 500px;
+  width: 100%;
+  max-height: 80%;
+  overflow-y: auto; /* for scrolling if needed */
+  position: relative;
+}
+
+
+#prioritySelect{
+  height: 48px;
+  border: none;
+  overflow: hidden;
+}
+#prioritySelect::-moz-focus-inner {
+  border: 0;
+}
+#prioritySelect:focus {
+  outline: none;
+}
+#prioritySelect option{
+  width: 60px;
+  font-size: 15px;
+  padding: 5px 0;
+  text-align: center;
+  margin-right: 5px;
+  margin-top: 10px;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+
+#prioritySelect #low{
+  border:green solid 3px;
+  color: green;
+}
+
+#prioritySelect #low:checked{
+  background-color:green;
+  color: white;
+}
+
+#prioritySelect #medium{
+  border:darkorange solid 3px;
+  color: darkorange;
+}
+
+#prioritySelect #medium:checked{
+  background-color:darkorange;
+  color: white;
+}
+
+#prioritySelect #high{
+  border:red solid 3px;
+  color: red;
+}
+
+#prioritySelect #high:checked{
+  background-color:red;
+  color: white;
+}
+
+/* Style for selected project */
+.selectedProject1{
+color:Red
+}
+
+
+/* ------------------------------------------------------------------------*/
+
+
+
 body {
     background-color: #f5f5f5;
     font-family: sans-serif;
@@ -25,98 +117,6 @@ body {
     margin: 0;
   }
 
-/* STYLE FOR THE ADD TASK BUTTON - FORM */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
-    backdrop-filter: blur(5px); /* for blurring effect */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .task-form {
-    background-color: #fff; /* white background for the form */
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* for a shadow effect */
-    max-width: 500px;
-    width: 100%;
-    max-height: 80%;
-    overflow-y: auto; /* for scrolling if needed */
-    position: relative;
-  }
-
-
-  #prioritySelect{
-    height: 48px;
-    border: none;
-    overflow: hidden;
-  }
-  #prioritySelect::-moz-focus-inner {
-    border: 0;
-  }
-  #prioritySelect:focus {
-    outline: none;
-  }
-  #prioritySelect option{
-    width: 60px;
-    font-size: 15px;
-    padding: 5px 0;
-    text-align: center;
-    margin-right: 5px;
-    margin-top: 10px;
-    display: inline-block;
-    cursor: pointer;
-    border-radius: 10px;
-  }
-
-
-  #prioritySelect #low{
-    border:green solid 3px;
-    color: green;
-  }
-
-  #prioritySelect #low:checked{
-    background-color:green;
-    color: white;
-  }
-
-  #prioritySelect #medium{
-    border:darkorange solid 3px;
-    color: darkorange;
-  }
-
-  #prioritySelect #medium:checked{
-    background-color:darkorange;
-    color: white;
-  }
-
-  #prioritySelect #high{
-    border:red solid 3px;
-    color: red;
-  }
-
-  #prioritySelect #high:checked{
-    background-color:red;
-    color: white;
-  }
-
-
-/* ------------------------------------------------------------------------*/
-
-
-
-.selectedProject1{
-    color:Red
-}
-
-
 
   .task-item {
     display: flex;
@@ -132,7 +132,8 @@ body {
     font-weight: bold;
   }
   
-  .task-item .details-button {
+  .task-item .details-button,
+  .task-item .edit-button {
     background-color: #fff;
     border: none;
     color: #666;
@@ -143,7 +144,7 @@ body {
   }
 
 
-/* Part 3: Style for details, edit and date fields */
+/* Style for details, edit and date fields */
 /* hides the "details", "edit", and date fields by default and shows them only when the user hovers 
 over the task item. It also styles the date field with a smaller font size and a lighter color. */
 .task-list li .details-button, 
@@ -159,11 +160,6 @@ over the task item. It also styles the date field with a smaller font size and a
   display: inline-block;
 }
 
-.task-list li .date {
-  font-size: 14px;
-  color: #aaa;
-  margin-right: 20px;
-}
 
 
 
@@ -183,10 +179,10 @@ over the task item. It also styles the date field with a smaller font size and a
   
   /* Date */
   .date {
-    color: #999;
-    display: block;
-    font-size: 0.8rem;
-    margin-top: 5px;
+    font-size: 14px;
+    color: #aaa;
+    margin-right: 20px;
+    margin-top: 10px;
   }
   
   /* Details button */
@@ -205,22 +201,9 @@ over the task item. It also styles the date field with a smaller font size and a
 
 
 
-/* Form styles */
-form#new-task-form {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
+/* Add Task button */
   
-  form#new-task-form input[type="text"] {
-    flex-grow: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    border-bottom: 2px solid #ccc;
-  }
-  
-  form#new-task-form button[type="submit"] {
+  #addTask {
     padding: 10px 20px;
     font-size: 16px;
     border: none;
@@ -229,6 +212,6 @@ form#new-task-form {
     cursor: pointer;
   }
   
-  form#new-task-form button[type="submit"]:hover {
+  #addTask:hover {
     background-color: #0c7cd5;
   }

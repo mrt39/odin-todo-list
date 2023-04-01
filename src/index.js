@@ -349,7 +349,7 @@ function displayTasks() {
         const li = document.createElement("li");
         //the container div
         const taskContainerDiv = document.createElement("div");
-        taskContainerDiv.classList.add('task-container');
+        taskContainerDiv.classList.add('task-item');
 
         //task title div
         const taskTitleDiv = document.createElement("div");
@@ -376,13 +376,13 @@ function displayTasks() {
 
         //task date para
         const taskDatePara = document.createElement("p");
-        taskDatePara.classList.add('task-date');
+        taskDatePara.classList.add('date');
         taskDatePara.innerText = formattedDate;
 
-        //task description para
+/*         //task description para
         const taskDescPara = document.createElement("p");
         taskDescPara.classList.add('task-description');
-        taskDescPara.innerText = currentOnProject.tasks[i].description;
+        taskDescPara.innerText = currentOnProject.tasks[i].description; */
 
         //-----third div-----
         const taskButtonsDiv = document.createElement("div");
@@ -391,8 +391,9 @@ function displayTasks() {
         const detailsButton = document.createElement("button");
         detailsButton.classList.add('details-button');
         detailsButton.innerText = "Details"
-        detailsButton.addEventListener("click", showDetails);
-
+        detailsButton.addEventListener("click", function(){
+            showDetails(i)
+          })
         const editButton = document.createElement("button");
         editButton.classList.add('edit-button');
         editButton.innerText = "Edit"
@@ -416,7 +417,7 @@ function displayTasks() {
 
         //---second div---
         taskDetailsDiv.appendChild(taskDatePara)
-        taskDetailsDiv.appendChild(taskDescPara)
+/*         taskDetailsDiv.appendChild(taskDescPara) */
         taskContainerDiv.appendChild(taskDetailsDiv)
 
         //---third div---
@@ -435,8 +436,69 @@ function displayTasks() {
 
 
 //the functionality of the "details" button
-function showDetails() {
+function showDetails(indexNumber) {
+    
+    //find the object that has it's currentlyOn property as true
+    const currentProject= allProjects.find((project) => project.currentlyOn===true);
+    
+    // Create a div for the modal overlay
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    
+    // Create a container div element for adding all the para elements
+    const containerDiv = document.createElement('div');
+    containerDiv.classList.add('task-form');
+    
+    // Add para elements to the container
+    const namePara = document.createElement('h3');
+    namePara.innerHTML = currentProject.tasks[indexNumber].name + "<br><br>";
+    containerDiv.appendChild(namePara);
 
+
+    const descPara = document.createElement('para');
+    descPara.innerHTML = 'Description: '+currentProject.tasks[indexNumber].description + "<br><br>";
+    containerDiv.appendChild(descPara);
+
+    //sort the date format
+    const formattedDate = format(new Date(currentProject.tasks[indexNumber].dueDate), 'd MMMM y')
+
+    const datePara = document.createElement('para');
+    datePara.innerHTML = 'Due: '+ formattedDate + "<br><br>";
+    containerDiv.appendChild(datePara);
+
+    //sort the priority text, capitalize the first letter
+    const formattedPrio = currentProject.tasks[indexNumber].priority.charAt(0).toUpperCase() + currentProject.tasks[indexNumber].priority.slice(1);
+
+    //Priority select <select> tag, displayed as buttons
+    const priorityPara = document.createElement('para');
+    priorityPara.innerHTML = 'Priority: '+formattedPrio + "<br><br>";
+    containerDiv.appendChild(priorityPara);
+
+    //close button
+    const closeButton = document.createElement('button');
+    closeButton.innerHTML = 'CLOSE';
+    closeButton.setAttribute('type', 'button');
+    containerDiv.appendChild(closeButton);
+    
+    // Add the container to the overlay
+    overlay.appendChild(containerDiv);
+    
+    // Add the overlay to the DOM
+    document.body.appendChild(overlay);
+    
+    // Add event listener to close the window when the close button is clicked
+    closeButton.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      //remove overlay when the form is submitted, so display returns to normal
+      overlay.remove();
+
+      //display tasks when submitted
+      //displayTasks()
+
+    });
+
+    
 }
 
 
@@ -602,8 +664,11 @@ function deleteTask(indexNumber) {
 
 
 //-------------------------------------------------TODO-------------------------------------------------------
-//showdetails button.
 //get some cool style for the body first
-//display something in each task for the different difficulty settings
-//then get some cool style for the add task button
+//display something in each task for the different difficulty settings (red color etc)
+//make it so that when the checkbox is ticked, the task is üstü çizili
+//ADD TASK WINDOW
 //replace the description with a textarea 
+//add a "close" to the add task window
+//get some cool style for the add task window
+//divide code into different js files, do the import and export required
