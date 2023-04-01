@@ -256,7 +256,7 @@ function newProject() {
         //pushing the new object into allProjects array
         allProjects.push(newProject)
 
-        console.log(allProjects)
+
 
         //update the projects display
         displayProjects()
@@ -336,7 +336,7 @@ function addNewTask() {
     let currentDate = year + '-'
     + ('0' + (month)).slice(-2) + '-'
     + ('0' + day).slice(-2) ;
-    console.log(currentDate)
+
     
     const dateLabel = document.createElement('label');
     dateLabel.textContent = 'Date: ';
@@ -398,11 +398,10 @@ function addNewTask() {
       //so, find the object that has it's currentlyOn property as true
       const currentProject= allProjects.find((project) => project.currentlyOn===true);
 
-      console.log(currentProject)
+
       //append the task to the "tasks" property of this object
       currentProject.tasks.push(newTaskVariable)
 
-      console.log(currentProject.tasks)
 
       //remove overlay when the form is submitted, so display returns to normal
       overlay.remove();
@@ -455,7 +454,7 @@ function displayTasks() {
         //and change the "finished" property of this object to "true"
         checkboxInput.addEventListener('change', function() {
             if (this.checked) {
-              console.log("Checkbox is checked..");
+
               span.classList.add('checked-span');
               currentOnProject.tasks[i].finished = true
             } else {
@@ -651,7 +650,7 @@ function editTask(indexNumber) {
     let currentDate = year + '-'
     + ('0' + (month)).slice(-2) + '-'
     + ('0' + day).slice(-2) ;
-    console.log(currentDate)
+
     
     const dateLabel = document.createElement('label');
     dateLabel.textContent = 'Date: ';
@@ -725,18 +724,6 @@ function editTask(indexNumber) {
       currentProject.tasks[indexNumber].dueDate = dateInput.value
       currentProject.tasks[indexNumber].priority = select.value
       
-      //var newTaskVariable = new Tasks (nameInput.value, descInput.value, dateInput.value, select.value)
-
-      //task also gets appended to the project object within the allProjects array, which has its "currentlyOn" property as true
-      //so, find the object that has it's currentlyOn property as true
-      //const currentProject= allProjects.find((project) => project.currentlyOn===true);
-
-      console.log(currentProject)
-      //append the task to the "tasks" property of this object
-      //currentProject.tasks.push(newTaskVariable)
-
-      console.log(currentProject.tasks)
-
       //remove overlay when the form is submitted, so display returns to normal
       overlay.remove();
 
