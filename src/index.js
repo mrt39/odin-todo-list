@@ -75,6 +75,7 @@ function displayProjects() {
     defaultParaContainer.style.width = "100%";
 
     const defaultPara = document.createElement("p");
+    defaultPara.classList.add('projectPara')
     defaultPara.textContent = allProjects[0].name;
 
     defaultParaContainer.appendChild(defaultPara);
@@ -94,6 +95,7 @@ function displayProjects() {
         projectItem.classList.add('projectParaContainer')
 
         const projectPara = document.createElement("p");
+        projectPara.classList.add('projectPara')
         projectPara.textContent = allProjects[i].name;
 
         const deleteButton = document.createElement("div");
