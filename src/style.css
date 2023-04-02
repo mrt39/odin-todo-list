@@ -98,7 +98,7 @@ body {
 }
 
 body {
-    background-color: #f2f2f2;
+    background-color: #F3DEBA;
     margin: 0;
   }
   
@@ -130,12 +130,12 @@ body {
   h1 {
     font-size: 36px;
     font-weight: 800;
-    color: #333;
+    color: white;
     margin: 0;
   }
 
   header {
-  background-color: #5d5d5d;
+  background-color: #A9907E;
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
@@ -191,7 +191,7 @@ aside h2 {
 
 /* Style the new project button */
 #new-project-button {
-  background-color: #0099ff;
+  background-color: #ABC4AA;
   color: white;
   border: none;
   font-size: 1.2em;
@@ -210,7 +210,7 @@ aside h2 {
 
 /* Add a hover effect to the new project button */
 #new-project-button:hover {
-  background-color: #0077cc;
+  background-color: #92A891;
 }
 
 .project-item {
@@ -354,7 +354,7 @@ over the task item. It also styles the date field with a smaller font size and a
     padding: 0;
   }
   .edit-button:hover {
-    color: #1976d2;
+    color: #ABC4AA;
   }
   
   /* Date */
@@ -378,7 +378,7 @@ over the task item. It also styles the date field with a smaller font size and a
   .details-button:hover,
   .edit-svg:hover,
   .delete-svg:hover {
-    color: #1976d2;
+    color: #ABC4AA;
   }
 
 
@@ -386,7 +386,7 @@ over the task item. It also styles the date field with a smaller font size and a
 /* Add Task button */
   
   .new-task-button{
-    background-color: #0099ff;
+    background-color: #ABC4AA;
     color: white;
     border: none;
     cursor: pointer;
@@ -403,8 +403,8 @@ over the task item. It also styles the date field with a smaller font size and a
   }
 
   /* Add a hover effect to the new project button */
-  #new-task-button:hover {
-    background-color: #0077cc;
+  .new-task-button:hover {
+    background-color: #92A891;
   }
 
 
@@ -412,7 +412,7 @@ over the task item. It also styles the date field with a smaller font size and a
 
 /* Styling for the footer */
 footer {
-  background-color: #333;
+  background-color: #A9907E;
   color: #fff;
   text-align: center;
   padding: 1rem;
