@@ -7,20 +7,19 @@
 </head>
 <body>
     <header>
-      <h1>To-Do List</h1>
+      <h1>To-Do</h1>
     </header>
+    <div class="main-container">
     <main id ="main-content">
       <aside>
-        <h2>Projects</h2>
         <ul id="project-list">
           <li class="projectName1">Default</li>
           <li class="projectName1">Today</li>
           <li class="projectName1">Tomorrow</li>
         </ul>
-        <button id="new-project-button">+</button>
+        <button class="new-project-button" id="new-project-button">+</button>
       </aside>
       <section id="task-display">
-        <h2 class="project-title">Default</h2>
         <ul id="task-list" class="task-list">
           <li>
             <div class="task-item">
@@ -63,9 +62,10 @@
             </div>
           </li>
         </ul>
-        <button id="addTask">Add Task</button>
+        <button class="new-task-button" id="addTask">Add Task</button>
       </section>
     </main>
+  </div>
     <footer>
       <p>© 2022 To-Do List App</p>
     </footer>

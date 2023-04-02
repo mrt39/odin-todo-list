@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish&family=Roboto&family=Varela&display=swap');
+
 /* STYLE FOR THE ADD TASK WINDOW*/
 .overlay {
   position: fixed;
@@ -95,7 +97,6 @@ body {
 
 body {
     background-color: #f2f2f2;
-    font-family: sans-serif;
     margin: 0;
   }
   
@@ -103,17 +104,19 @@ body {
     min-height: 50%;
     margin-top: 50px;
     padding: 20px;
+    width: 50%;
   }
 
   header, main {
     display: flex;
     justify-content: center;
   }
-  
-  aside {
-    background-color: #e0e0e0;
-    min-width: 200px;
-    padding: 20px;
+
+  .main-container{
+    display: flex;
+    justify-content: center;
+    height: 70%;
+    font-family: 'Mulish', sans-serif;
   }
   
   section {
@@ -139,10 +142,9 @@ body {
 
 #main-content {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 2rem;
-  font-family: 'Roboto', sans-serif;
 
 }
 
@@ -151,8 +153,9 @@ body {
 aside {
   background-color: #f7f7f7;
   padding: 1em;
-  font-family: Arial, sans-serif;
   font-size: 1.2em;
+  min-width: 200px;
+  border-radius: 10px;
 }
 
 /* Style the Projects heading */
@@ -235,20 +238,18 @@ aside h2 {
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-
   border-radius: 10px;
+
   padding: 30px;
-  margin: 20px;
-
-
-  position: relative;
+  margin: 0 20px 20px 20px;
   
+  width: 50%;
   
 }
 
 .project-title {
-  text-align: center;
-  margin-bottom: 20px;
+  
+  margin-bottom: 50px;
   font-size: 2rem;
   font-weight: bold;
   color: #0d47a1;
@@ -257,6 +258,7 @@ aside h2 {
 .task-list {
   list-style: none;
   padding: 0;
+ 
 }
 
 /* -------------------------------------------------------- END OF PART 3 -------------------------------------------------------- */

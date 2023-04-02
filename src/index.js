@@ -27,7 +27,7 @@ function Projects(name) {
 }
 
 //set up the default project, for the tasks to be added on initially
-const projectDefault = new Projects ("Default");
+const projectDefault = new Projects ("Today");
 projectDefault.currentlyOn = true;
 allProjects.push(projectDefault);
 
@@ -235,6 +235,12 @@ function newProject() {
         //if there is one, projectSameName variable will not be undefined, then we display the alertspan alert we defined above
         if(projectSameName != undefined) {
 
+            //if the alert is already display (the user is trying the same thing multiple times) don't append the alert again
+            var alertMessage = document.querySelector(".alertSpan")
+            if (alertMessage != undefined) {
+                return
+            }
+
            form.parentNode.insertBefore(alertSpan, form.nextSibling)
             return
         }
@@ -422,6 +428,8 @@ function displayTasks() {
     const currentOnProject= allProjects.find((project) => project.currentlyOn===true);
 
     const taskList = document.getElementById("task-list")
+
+
     //remove the contents of the taskList
     taskList.innerHTML = ""
 
@@ -474,10 +482,7 @@ function displayTasks() {
         }
 
 
-        //-----second div-----
-        const taskDetailsDiv = document.createElement("div");
-        taskDetailsDiv.classList.add('task-details');
-
+        //-----time-----
         //sort the date format
         const formattedDate = format(new Date(currentOnProject.tasks[i].dueDate), 'd MMMM')
 
@@ -487,7 +492,7 @@ function displayTasks() {
         taskDatePara.innerText = formattedDate;
 
 
-        //-----third div-----
+        //-----second div-----
         const taskButtonsDiv = document.createElement("div");
         taskButtonsDiv.classList.add('task-buttons');
 
@@ -519,10 +524,7 @@ function displayTasks() {
         taskContainerDiv.appendChild(taskTitleDiv)
 
         //---second div---
-        taskDetailsDiv.appendChild(taskDatePara)
-        taskContainerDiv.appendChild(taskDetailsDiv)
-
-        //---third div---
+        taskButtonsDiv.appendChild(taskDatePara)
         taskButtonsDiv.appendChild(detailsButton)
         taskButtonsDiv.appendChild(editButton)
         taskButtonsDiv.appendChild(deleteButton)
@@ -760,4 +762,3 @@ function deleteTask(indexNumber) {
 //replace the description with a textarea 
 //add a "close" to the add task window
 //get some cool style for the add task window
-//divide code into different js files, do the import and export required
