@@ -190,29 +190,44 @@ function newProject() {
     
     // Create a form element for the task input fields
     const form = document.createElement('form');
+    form.classList.add('project-form')
 
     // Add input fields to the form element
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('name', 'name');
+    nameInput.required = true
     form.appendChild(nameInput);
 
-    const addButton = document.createElement('button');
-    addButton.textContent = 'Add Project';
-    addButton.setAttribute('type', 'submit');
-    form.appendChild(addButton);
+    const buttonContainer = document.createElement('div');
 
-    const cancelButton = document.createElement('button');
-    cancelButton.textContent = 'Cancel';
-    cancelButton.setAttribute('type', 'reset');
-    form.appendChild(cancelButton);
+    const addButton = document.createElement('button');
+    addButton.textContent = '+';
+    addButton.setAttribute('type', 'submit');
+    addButton.classList.add('new-task-button')
+    buttonContainer.appendChild(addButton);
+
+    form.appendChild(buttonContainer);
+
+    
+    const closeButton = document.createElement('span');
+    closeButton.innerHTML = "X"
+    closeButton.classList.add('close-button1')
+    form.appendChild(closeButton);
 
     // Add the form below the newProject button.
     let asideBar = document.querySelector("aside")
     asideBar.appendChild(form)
 
     // Add event listener to remove the form when cancel button is pressed
-    cancelButton.addEventListener("click", () => {
+    closeButton.addEventListener("click", () => {
+
+        //if the alert is already on display, remove the alert message
+        var alertMessage = document.querySelector(".alertSpan")
+        if (alertMessage != undefined) {
+            alertMessage.remove()
+        }
+
         //remove the form from DOM
         form.remove()
         //display the "New Project" button again
@@ -341,8 +356,8 @@ function addNewTask() {
     const descLabel = document.createElement('label');
     descLabel.textContent = 'Description ';
     descLabel.classList.add('form-label');
-    const descInput = document.createElement('input');
-    descInput.setAttribute('type', 'text');
+    const descInput = document.createElement('textarea');
+    descInput.setAttribute('rows', '5'); 
     descInput.setAttribute('name', 'description');
     descInput.classList.add('form-input');
     form.appendChild(descLabel);
@@ -463,6 +478,17 @@ function displayTasks() {
         //the container div
         const taskContainerDiv = document.createElement("div");
         taskContainerDiv.classList.add('task-item');
+
+        //add color on the left side border of the div, based on the priority ranking of the task
+        if (currentOnProject.tasks[i].priority === "low") {
+            taskContainerDiv.classList.add('priority-low');
+        }
+        else if (currentOnProject.tasks[i].priority === "medium") {
+            taskContainerDiv.classList.add('priority-medium');
+        }
+        else if (currentOnProject.tasks[i].priority === "high") {
+            taskContainerDiv.classList.add('priority-high');
+        }
 
         //task title div
         const taskTitleDiv = document.createElement("div");
@@ -665,10 +691,12 @@ function editTask(indexNumber) {
     form.appendChild(nameLabel);
     form.appendChild(nameInput);
     
+    
     const descLabel = document.createElement('label');
     descLabel.textContent = 'Description ';
-    const descInput = document.createElement('input');
-    descInput.setAttribute('type', 'text');
+    descLabel.classList.add('form-label');
+    const descInput = document.createElement('textarea');
+    descInput.setAttribute('rows', '5'); 
     descInput.setAttribute('name', 'description');
     descInput.classList.add('form-input');
     descInput.value = currentProject.tasks[indexNumber].description
@@ -793,10 +821,6 @@ function deleteTask(indexNumber) {
 
 
 
-//-------------------------------------------------TODO-------------------------------------------------------
-//get some cool style for the body first
-//display something in each task for the different difficulty settings (red color etc)
-//--ADD TASK WINDOW--
-//replace the description with a textarea 
-//add a "close" to the add task window
-//get some cool style for the add task window
+
+
+
