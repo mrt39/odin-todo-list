@@ -309,26 +309,42 @@ function addNewTask() {
     // Create a div for the modal overlay
     const overlay = document.createElement('div');
     overlay.classList.add('overlay');
-    
+
     // Create a form element for the task input fields
     const form = document.createElement('form');
     form.classList.add('task-form');
+
+    //close button
+    const closeButton = document.createElement('a');
+    closeButton.innerHTML = "&times;"
+    closeButton.classList.add('close-button');
+    closeButton.href = "#"
+    closeButton.addEventListener("click", function(){ 
+        //remove overlay when the form is submitted, so display returns to normal
+        overlay.remove();
+    });
+    //append the close button to form
+    form.appendChild(closeButton)
     
     // Add input fields to the form element
     const nameLabel = document.createElement('label');
-    nameLabel.textContent = 'Name: ';
+    nameLabel.textContent = 'Task Name ';
+    nameLabel.classList.add('form-label');
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('name', 'name');
+    nameInput.classList.add('form-input');
     nameInput.required = true
     form.appendChild(nameLabel);
     form.appendChild(nameInput);
     
     const descLabel = document.createElement('label');
-    descLabel.textContent = 'Description: ';
+    descLabel.textContent = 'Description ';
+    descLabel.classList.add('form-label');
     const descInput = document.createElement('input');
     descInput.setAttribute('type', 'text');
     descInput.setAttribute('name', 'description');
+    descInput.classList.add('form-input');
     form.appendChild(descLabel);
     form.appendChild(descInput);
 
@@ -347,18 +363,21 @@ function addNewTask() {
 
     
     const dateLabel = document.createElement('label');
-    dateLabel.textContent = 'Date: ';
+    dateLabel.textContent = 'Due ';
+    dateLabel.classList.add('form-label');
     const dateInput = document.createElement('input');
     dateInput.setAttribute('type', 'date');
     dateInput.setAttribute('name', 'date');
     dateInput.setAttribute('min', currentDate);
     dateInput.required = true
+    dateInput.classList.add('form-input');
     form.appendChild(dateLabel);
     form.appendChild(dateInput);
 
     //Priority select <select> tag, displayed as buttons
     const priorityLabel = document.createElement('label');
-    priorityLabel.textContent = 'Priority: ';
+    priorityLabel.textContent = 'Priority ';
+    priorityLabel.classList.add('form-label');
     const select = document.createElement('select');
     select.setAttribute('id', 'prioritySelect');
     select.multiple = true
@@ -387,6 +406,7 @@ function addNewTask() {
     const addButton = document.createElement('button');
     addButton.textContent = 'Add Task';
     addButton.setAttribute('type', 'submit');
+    addButton.classList.add('form-button');
     form.appendChild(addButton);
     
     // Add the form to the overlay
@@ -450,10 +470,12 @@ function displayTasks() {
 
         //label
         const label = document.createElement("label");
+        label.classList.add('task-label');
 
         //checkbox input
         const checkboxInput = document.createElement("input");
         checkboxInput.setAttribute('type', 'checkbox');
+        checkboxInput.classList.add('checkboxInput');
 
         //if the task's finished property is true, display the checkbox as checked.
         if (currentOnProject.tasks[i].finished === true) {
@@ -554,6 +576,18 @@ function showDetails(indexNumber) {
     // Create a container div element for adding all the para elements
     const containerDiv = document.createElement('div');
     containerDiv.classList.add('task-form');
+
+    //close button
+    const closeButton = document.createElement('a');
+    closeButton.innerHTML = "&times;"
+    closeButton.classList.add('close-button');
+    closeButton.href = "#"
+    closeButton.addEventListener("click", function(){ 
+        //remove overlay when the form is submitted, so display returns to normal
+        overlay.remove();
+    });
+    //append the close button to form
+    containerDiv.appendChild(closeButton)
     
     // Add para elements to the container
     const namePara = document.createElement('h3');
@@ -580,29 +614,14 @@ function showDetails(indexNumber) {
     priorityPara.innerHTML = 'Priority: '+formattedPrio + "<br><br>";
     containerDiv.appendChild(priorityPara);
 
-    //close button
-    const closeButton = document.createElement('button');
-    closeButton.innerHTML = 'CLOSE';
-    closeButton.setAttribute('type', 'button');
-    containerDiv.appendChild(closeButton);
-    
+  
     // Add the container to the overlay
     overlay.appendChild(containerDiv);
     
     // Add the overlay to the DOM
     document.body.appendChild(overlay);
     
-    // Add event listener to close the window when the close button is clicked
-    closeButton.addEventListener('click', (event) => {
-      event.preventDefault();
 
-      //remove overlay when the form is submitted, so display returns to normal
-      overlay.remove();
-
-      //display tasks when submitted
-      //displayTasks()
-
-    });
 
     
 }
@@ -621,23 +640,37 @@ function editTask(indexNumber) {
     // Create a form element for the task input fields
     const form = document.createElement('form');
     form.classList.add('task-form');
+
+    //close button
+    const closeButton = document.createElement('a');
+    closeButton.innerHTML = "&times;"
+    closeButton.classList.add('close-button');
+    closeButton.href = "#"
+    closeButton.addEventListener("click", function(){ 
+        //remove overlay when the form is submitted, so display returns to normal
+        overlay.remove();
+    });
+    //append the close button to form
+    form.appendChild(closeButton)
     
     // Add input fields to the form element
     const nameLabel = document.createElement('label');
-    nameLabel.textContent = 'Name: ';
+    nameLabel.textContent = 'Task Name ';
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('name', 'name');
+    nameInput.classList.add('form-input');
     nameInput.required = true
     nameInput.value = currentProject.tasks[indexNumber].name
     form.appendChild(nameLabel);
     form.appendChild(nameInput);
     
     const descLabel = document.createElement('label');
-    descLabel.textContent = 'Description: ';
+    descLabel.textContent = 'Description ';
     const descInput = document.createElement('input');
     descInput.setAttribute('type', 'text');
     descInput.setAttribute('name', 'description');
+    descInput.classList.add('form-input');
     descInput.value = currentProject.tasks[indexNumber].description
     form.appendChild(descLabel);
     form.appendChild(descInput);
@@ -657,19 +690,21 @@ function editTask(indexNumber) {
 
     
     const dateLabel = document.createElement('label');
-    dateLabel.textContent = 'Date: ';
+    dateLabel.textContent = 'Due ';
     const dateInput = document.createElement('input');
     dateInput.setAttribute('type', 'date');
     dateInput.setAttribute('name', 'date');
     dateInput.setAttribute('min', currentDate);
     dateInput.required = true
+    dateInput.classList.add('form-input');
     dateInput.value = currentProject.tasks[indexNumber].dueDate
     form.appendChild(dateLabel);
     form.appendChild(dateInput);
 
     //Priority select <select> tag, displayed as buttons
     const priorityLabel = document.createElement('label');
-    priorityLabel.textContent = 'Priority: ';
+    priorityLabel.textContent = 'Priority ';
+    priorityLabel.classList.add('form-label');
     const select = document.createElement('select');
     select.setAttribute('id', 'prioritySelect');
     select.multiple = true
@@ -709,6 +744,7 @@ function editTask(indexNumber) {
     const addButton = document.createElement('button');
     addButton.textContent = 'Update Task';
     addButton.setAttribute('type', 'submit');
+    addButton.classList.add('form-button');
     form.appendChild(addButton);
     
     // Add the form to the overlay
