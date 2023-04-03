@@ -1,0 +1,622 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish&family=Roboto&family=Varela&display=swap');
+
+/* STYLE FOR THE ADD TASK WINDOW*/
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  backdrop-filter: blur(5px); /* for blurring effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  background-color: transparent;
+  padding: 10px;
+  padding-top: 0;
+  border: none;
+  outline: none;
+}
+
+.task-form {
+
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 80%;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F3DEBA;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  font-family: 'Mulish', sans-serif;
+}
+
+.form-label {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.form-input {
+  font-family: 'Mulish', sans-serif;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px #2196F3;
+}
+
+.form-button {
+  margin-top: 20px;
+  font-family: 'Mulish', sans-serif;
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #ABC4AA;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-button:hover {
+  background-color: #92A891;
+}
+
+@media screen and (min-width: 768px) {
+  .task-form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+
+
+
+#prioritySelect{
+  font-family: 'Mulish', sans-serif;
+  height: 48px;
+  border: none;
+  overflow: hidden;
+  background-color: #F3DEBA;
+}
+#prioritySelect::-moz-focus-inner {
+  border: 0;
+}
+#prioritySelect:focus {
+  outline: none;
+}
+#prioritySelect option{
+  width: 60px;
+  font-size: 15px;
+  padding: 5px 0;
+  text-align: center;
+  margin-right: 5px;
+  margin-top: 10px;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+
+#prioritySelect #low{
+  border:mediumseagreen solid 3px;
+  color: mediumseagreen;
+}
+
+#prioritySelect #low:checked{
+  background-color:mediumseagreen;
+  color: white;
+}
+
+#prioritySelect #medium{
+  border:orange  solid 3px;
+  color: orange ;
+}
+
+#prioritySelect #medium:checked{
+  background-color:orange ;
+  color: white;
+}
+
+#prioritySelect #high{
+  border:mediumvioletred solid 3px;
+  color: mediumvioletred;
+}
+
+#prioritySelect #high:checked{
+  background-color:mediumvioletred;
+  color: white;
+}
+
+
+/* Style for selected project */
+.selectedProject1{
+font-size: 1.9em;
+font-weight: bold;
+}
+
+textarea {
+  resize: none;
+}
+
+/* ------------------------------------------------------------------------*/
+
+html, 
+body {
+    height: 100%;
+}
+
+body {
+    background-color: #F3DEBA;
+    margin: 0;
+  }
+  
+  main {
+    min-height: 50%;
+    margin-top: 50px;
+    padding: 20px;
+    width: 50%;
+  }
+
+  header, main {
+    display: flex;
+    justify-content: center;
+  }
+
+  .main-container{
+    display: flex;
+    justify-content: center;
+    height: 70%;
+    font-family: 'Mulish', sans-serif;
+  }
+  
+  section {
+    background-color: #fff;
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    font-weight: 800;
+    color: white;
+    margin: 0;
+  }
+
+  header {
+  background-color: #A9907E;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  padding: 1rem;
+}
+
+#main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+}
+
+/* -------------------------------------------------------- PROJECTS SECTION -------------------------------------------------------- */
+/* Add a background color and adjust font styles for the Projects section */
+aside {
+  background-color: #f7f7f7;
+  padding: 1em;
+  font-size: 1.2em;
+  min-width: 200px;
+  border-radius: 10px;
+}
+
+/* Style the Projects heading */
+aside h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Style the project list */
+#project-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.projectPara{
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+/* Style the project list items */
+#project-list li {
+  cursor: pointer;
+  font-size: 1.6em;
+}
+
+/* Add a hover effect to the project list items */
+#project-list li:hover {
+  font-size: 1.9em;
+}
+
+/* Style the new project button */
+#new-project-button {
+  background-color: #ABC4AA;
+  color: white;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-top: 0.5em;
+
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  border-radius: 50%; /* Makes the button completely round */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Adds a shadow to the button */
+}
+
+/* Add a hover effect to the new project button */
+#new-project-button:hover {
+  background-color: #92A891;
+}
+
+.project-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px;
+}
+
+
+
+/* Delete button is only visible when we hover on the LI element */
+.projectName1 .delete-project-button1{
+  display: none;
+}
+.projectName1:hover .delete-project-button1{
+  display: inline-block;
+}
+
+.alertSpan{
+  color: #ABC4AA;
+}
+
+/* --------------------------------------------------------***-------------------------------------------------------- */
+
+/* -------------------------------------------------------- TASKS SECTION-------------------------------------------------------- */
+#task-display {
+  margin: 0 0 0 250px;
+  padding: 20px;
+  border-left: 2px solid #f5f5f5;
+
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  border-radius: 10px;
+
+  padding: 30px;
+  margin: 0 20px 20px 20px;
+  
+  width: 50%;
+  
+}
+
+.project-title {
+  
+  margin-bottom: 50px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0d47a1;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+ 
+}
+
+  .task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+
+    /* border-bottom: 1px solid #ccc; */
+
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  }
+
+.priority-low{
+  border-left: 5px mediumseagreen solid;
+}
+
+.priority-medium{
+  border-left: 5px orange solid;
+}
+
+.priority-high{
+  border-left: 5px mediumvioletred solid;
+}
+
+  .task-label{
+    display: flex;
+  }
+  
+  
+  .task-title input[type="checkbox"] {
+    margin-right: 15px;
+
+
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  color: red;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid #ABC4AA;
+  border-radius: 0.15em;
+
+
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  }
+
+  input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--form-control-color);
+    background-color: #ABC4AA;
+    cursor: pointer;
+  }
+
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    color: #ABC4AA;
+  }
+
+  .task-title span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .checked-span{
+    font-weight: normal !important;
+    color: gray!important;
+    text-decoration: line-through!important;
+  }
+
+  .task-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  .task-item .details-button,
+  .task-item .edit-button,
+  .task-item .delete-button {
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    color: #666;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+
+/* Style for details, edit and date fields */
+/* hides the "details", "edit", and date fields by default and shows them only when the user hovers 
+over the task item. It also styles the date field with a smaller font size and a lighter color. */
+.task-list li .details-button, 
+.task-list li .edit-button,
+.task-list li .delete-button{
+  visibility: hidden;
+  margin-right: 20px;
+}
+
+.task-list li:hover .details-button, 
+.task-list li:hover .edit-button, 
+.task-list li:hover .delete-button {
+  visibility: visible;
+}
+
+
+/* Edit button */
+.edit-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    outline: none;
+    padding: 0;
+  }
+  .edit-button:hover {
+    color: #ABC4AA;
+  }
+  
+  /* Date */
+  .date {
+    font-size: 14px;
+    color: #aaa;
+    margin-right: 20px;
+    margin-top: 10px;
+  }
+  
+  /* Details button */
+  .details-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    outline: none;
+    padding: 0;
+  }
+  .details-button:hover,
+  .edit-svg:hover,
+  .delete-svg:hover {
+    color: #ABC4AA;
+  }
+
+
+
+/* Add Task button */
+  
+  .new-task-button{
+    background-color: #ABC4AA;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 0.5em;
+  
+    height: 2.5rem;
+    width: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    border-radius: 50%; /* Makes the button completely round */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Adds a shadow to the button */
+  }
+
+  /* Add a hover effect to the new project button */
+  .new-task-button:hover {
+    background-color: #92A891;
+  }
+
+
+
+
+/* Styling for the footer */
+footer {
+  background-color: #A9907E;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* Styling for the copyright text */
+footer p {
+  margin: 0;
+  font-size: 0.8rem;
+  font-family: 'Mulish', sans-serif;
+}
+
+
+
+/* ---------------STYLING FOR THE ADD PROJECT FORM ----------------------------- */
+.project-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #FFF;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  position: relative;
+}
+
+.project-form input[type="text"] {
+  font-size: 20px;
+  padding: 10px 10px 5px 2px;
+  margin-right: 10px;
+  flex: 1;
+  border: none;
+  border-bottom: 2px solid #7B7B7B;
+  transition: all 0.3s ease;
+  font-family: 'Mulish', sans-serif;
+}
+
+.project-form input[type="text"]:focus {
+  outline: none;
+  border-bottom: 2px solid #ABC4AA;
+}
+
+
+.close-button1 {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 18px;
+  margin-top: 0;
+  font-weight: bold;
+  color: #7B7B7B;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-button1:hover {
+  color: #ABC4AA;
+}
+
+.project-form::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.project-form.transparent {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.project-form.transparent input[type="text"] {
+  border-color: #FFF;
+}
+
+
+
+/* ---------------*******----------------------------- */
