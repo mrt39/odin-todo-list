@@ -40,7 +40,6 @@ function Tasks(name, description, dueDate, priority) {
 
     return idNo++
 
-
 }
 
 
@@ -176,8 +175,33 @@ projectSchool.tasks.push(finishProject)
 
 
 
+////Function for saving to localstorage so tasks and projects added by the user are saved between sessions
+//localstorage only supports strings, so we turn the array into the string 
+function populateStorage() {
+    localStorage.setItem("allProjectsStored", JSON.stringify(allProjects)); 
+
+}
+
+//this is how we get the values from the localstorage. since the value is stored as a string, we un-string it.
+function getfromStorage(){
+    
+    //dealing with the possibility of localstorage being empty, adding the "project today" object to the array if that's the case
+    if (localStorage.getItem("allProjectsStored") === null || localStorage.getItem("allProjectsStored") === undefined ){
+        allProjects.push(projectToday)
+    }
+    else{
+        allProjects = JSON.parse(localStorage.getItem("allProjectsStored"));
+    }
+}
+
+
+//get the values from the storage, so it populates up the "allprojects" array 
+getfromStorage()
+console.log(allProjects)
+
 displayProjects()
 selectedProjectDisplay()
+
 
 
 //displayProjects function
@@ -278,6 +302,9 @@ projectsAll.forEach(project => {
         }
         clickedProject.currentlyOn = true;
 
+        //update the allprojects array in the local storage
+        populateStorage()
+        
         ////display projects in the allProjects array
         displayProjects()
         
@@ -407,7 +434,8 @@ function newProject() {
         //pushing the new object into allProjects array
         allProjects.push(newProject)
 
-
+        //update the allprojects array in the local storage
+        populateStorage()
 
         //update the projects display
         displayProjects()
@@ -434,6 +462,9 @@ function deleteProject(indexNumber){
 
     //from the currently on project, remove the task from the "tasks" array, with the indexNumber we got from the function call
     allProjects.splice(indexNumber, 1);
+
+    //update the allprojects array in the local storage
+    populateStorage()
 
     //refresh the display of the projects
     displayProjects()
@@ -576,6 +607,9 @@ function addNewTask() {
       //append the task to the "tasks" property of this object
       currentProject.tasks.push(newTaskVariable)
 
+        //update the allprojects array in the local storage
+        populateStorage()
+
 
       //remove overlay when the form is submitted, so display returns to normal
       overlay.remove();
@@ -646,10 +680,14 @@ function displayTasks() {
 
               span.classList.add('checked-span');
               currentOnProject.tasks[i].finished = true
+                //update the allprojects array in the local storage
+                populateStorage()
             } else {
               span.style.textDecoration = "none";
               span.classList.remove('checked-span');
               currentOnProject.tasks[i].finished = false
+                //update the allprojects array in the local storage
+                populateStorage()
             }
           });
 
@@ -922,6 +960,9 @@ function editTask(indexNumber) {
       currentProject.tasks[indexNumber].description = descInput.value
       currentProject.tasks[indexNumber].dueDate = dateInput.value
       currentProject.tasks[indexNumber].priority = select.value
+
+        //update the allprojects array in the local storage
+        populateStorage()
       
       //remove overlay when the form is submitted, so display returns to normal
       overlay.remove();
@@ -944,6 +985,9 @@ function deleteTask(indexNumber) {
 
     //from the currently on project, remove the task from the "tasks" array, with the indexNumber we got from the function call
     currentOnProject.tasks.splice(indexNumber, 1);
+
+    //update the allprojects array in the local storage
+    populateStorage()
 
     //refresh the display of the tasks
     displayTasks()
