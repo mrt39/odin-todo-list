@@ -387,7 +387,7 @@ aside h2 {
 
   display: grid;
   place-content: center;
-
+  cursor: pointer;
   }
 
   input[type="checkbox"]::before {
@@ -398,6 +398,7 @@ aside h2 {
     transition: 120ms transform ease-in-out;
     box-shadow: inset 1em 1em var(--form-control-color);
     background-color: #ABC4AA;
+    cursor: pointer;
   }
 
   input[type="checkbox"]:checked::before {
@@ -544,6 +545,7 @@ footer {
 footer p {
   margin: 0;
   font-size: 0.8rem;
+  font-family: 'Mulish', sans-serif;
 }
 
 

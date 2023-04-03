@@ -5,7 +5,7 @@ import { compareAsc, format } from 'date-fns'
 //array for storing the projects 
 var allProjects = [];
 //variable for storing the id number for each individual Task object
-var idNo = 1
+var idNo = 4
 
 //clicking on add task button starts the showtaskform function
 const addTaskButton = document.getElementById("addTask");
@@ -26,11 +26,6 @@ function Projects(name) {
 
 }
 
-//set up the default project, for the tasks to be added on initially
-const projectDefault = new Projects ("Today");
-projectDefault.currentlyOn = true;
-allProjects.push(projectDefault);
-
 
 //CONSTRUCTOR FOR TASK OBJECTS
 function Tasks(name, description, dueDate, priority) {
@@ -47,6 +42,139 @@ function Tasks(name, description, dueDate, priority) {
 
 
 }
+
+
+//set up the default project, for the tasks to be added on initially
+const projectToday = new Projects ("Today");
+projectToday.currentlyOn = true;
+allProjects.push(projectToday);
+
+const projectWeek = new Projects ("Week");
+allProjects.push(projectWeek);
+
+const projectHome = new Projects ("Home");
+allProjects.push(projectHome);
+
+const projectSchool = new Projects ("School");
+allProjects.push(projectSchool);
+
+
+//set up the default tasks, for the tasks to be added on initially
+
+const dishes = {
+    "idNum": 1,
+    "name": "dishes",
+    "description": "",
+    "dueDate": "2023-04-03",
+    "priority": "medium",
+    "finished": true
+}
+projectHome.tasks.push(dishes)
+
+const tea = {
+    "idNum": 1,
+    "name": "buy tea",
+    "description": "buy tea from amazon",
+    "dueDate": "2023-04-03",
+    "priority": "low",
+    "finished": false
+}
+projectHome.tasks.push(tea)
+
+const chicken = {
+    "idNum": 1,
+    "name": "get chicken out of freezer",
+    "description": "",
+    "dueDate": "2023-04-03",
+    "priority": "high",
+    "finished": false
+}
+projectHome.tasks.push(chicken)
+
+
+const mail = {
+    "idNum": 1,
+    "name": "send e-mail",
+    "description": "send e-mail to xoxo@internet.com",
+    "dueDate": "2023-04-03",
+    "priority": "medium",
+    "finished": false
+}
+projectToday.tasks.push(mail)
+
+const pushup = {
+    "idNum": 1,
+    "name": "50 pushups",
+    "description": "send e-mail to xoxo@internet.com",
+    "dueDate": "2023-04-03",
+    "priority": "medium",
+    "finished": true
+}
+projectToday.tasks.push(pushup)
+
+
+const article = {
+    "idNum": 1,
+    "name": "read the article",
+    "description": "read the article emily sent you",
+    "dueDate": "2023-04-03",
+    "priority": "low",
+    "finished": false
+}
+projectToday.tasks.push(article)
+
+const tom = {
+    "idNum": 1,
+    "name": "take tom to vet",
+    "description": "",
+    "dueDate": "2023-04-03",
+    "priority": "high",
+    "finished": true
+}
+projectToday.tasks.push(tom)
+
+const book = {
+    "idNum": 1,
+    "name": "finish book",
+    "description": "finish the brothers karamazov",
+    "dueDate": "2023-04-10",
+    "priority": "medium",
+    "finished": false
+}
+projectWeek.tasks.push(book)
+
+const insurance = {
+    "idNum": 1,
+    "name": "renew insurance",
+    "description": "renew car insurance",
+    "dueDate": "2023-04-10",
+    "priority": "high",
+    "finished": false
+}
+projectWeek.tasks.push(insurance)
+
+const exam = {
+    "idNum": 1,
+    "name": "prepare for the exam",
+    "description": "",
+    "dueDate": "2023-04-08",
+    "priority": "high",
+    "finished": false
+}
+projectSchool.tasks.push(exam)
+
+
+const finishProject = {
+    "idNum": 1,
+    "name": "finish project",
+    "description": "",
+    "dueDate": "2023-04-13",
+    "priority": "high",
+    "finished": true
+}
+projectSchool.tasks.push(finishProject)
+
+
 
 displayProjects()
 selectedProjectDisplay()
@@ -434,9 +562,12 @@ function addNewTask() {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
 
+
       //create a new task
       var newTaskVariable = new Tasks (nameInput.value, descInput.value, dateInput.value, select.value)
 
+      console.log(newTaskVariable)
+      
       //task also gets appended to the project object within the allProjects array, which has its "currentlyOn" property as true
       //so, find the object that has it's currentlyOn property as true
       const currentProject= allProjects.find((project) => project.currentlyOn===true);
@@ -821,6 +952,9 @@ function deleteTask(indexNumber) {
 
 
 
+//////TODO--------------------------
+//ADD A COUPLE OF PROJECTS AND TASKS
+//DO THE THING IN ODIN PROJECT
 
 
 
