@@ -185,9 +185,9 @@ function populateStorage() {
 //this is how we get the values from the localstorage. since the value is stored as a string, we un-string it.
 function getfromStorage(){
     
-    //dealing with the possibility of localstorage being empty, adding the "project today" object to the array if that's the case
+    //dealing with the possibility of localstorage being empty, if that's the case, returning the function so the default items we defined above will populate the array
     if (localStorage.getItem("allProjectsStored") === null || localStorage.getItem("allProjectsStored") === undefined ){
-        allProjects.push(projectToday)
+        return
     }
     else{
         allProjects = JSON.parse(localStorage.getItem("allProjectsStored"));
