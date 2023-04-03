@@ -994,11 +994,3 @@ function deleteTask(indexNumber) {
 }
 
 
-
-
-//////TODO--------------------------
-//ADD A COUPLE OF PROJECTS AND TASKS
-//DO THE THING IN ODIN PROJECT
-
-
-
